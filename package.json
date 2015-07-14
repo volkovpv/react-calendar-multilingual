@@ -1,0 +1,27 @@
+{
+  "name": "react-calendar-multilingual.zz",
+  "version": "0.0.1",
+  "description": "",
+  "main": "./lib/Calendar.jsx",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/volkovpv/react-calendar-multilingual.git"
+  },
+  "keywords": [
+    "react",
+    "calendar",
+    "multilingual",
+    "multilanguage",
+    "мультиязычный",
+    "многоязычный"
+  ],
+  "author": "https://github.com/volkovpv",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/volkovpv/react-calendar-multilingual/issues"
+  },
+  "homepage": "https://github.com/volkovpv/react-calendar-multilingual#readme"
+}
