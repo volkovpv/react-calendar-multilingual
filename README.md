@@ -1,4 +1,5 @@
 ## react-calendar-multilingual
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/volkovpv/react-calendar-multilingual/master/LICENSE)
 [![build status](https://img.shields.io/travis/volkovpv/react-calendar-multilingual/master.svg?style=flat-square)](https://travis-ci.org/volkovpv/react-calendar-multilingual)
 [![Coverage Status](https://img.shields.io/coveralls/volkovpv/react-calendar-multilingual/master.svg?style=flat-square)](https://coveralls.io/r/volkovpv/react-calendar-multilingual?branch=master)
 #Install
