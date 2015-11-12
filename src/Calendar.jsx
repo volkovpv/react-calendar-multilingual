@@ -12,11 +12,11 @@ var Day = require('./Day'),
     moment = require('moment');
 
 moment.locale('ru', {
-    months : "Январь_Февраль_Март_Апрель_Май_Июнь_Июль_Август_Сентябрь_Октябрь_Ноябрь_Декабрь".split("_"),
-    monthsShort : "Янв_Фев_Мар_Апр_Май_Июн_Июл_Авг_Сен_Окт_Ноя_Дек".split("_"),
-    weekdays : "Воскресенье_Понедельник_Вторник_Среда_Четверг_Пятница_Суббота".split("_"),
-    weekdaysShort : "Вск_Пнд_Втр_Срд_Чтв_Птн_Сбт".split("_"),
-    weekdaysMin : "Вс_Пн_Вт_Ср_Чт_Пт_Сб".split("_"),
+    months : "РЇРЅРІР°СЂСЊ_Р¤РµРІСЂР°Р»СЊ_РњР°СЂС‚_РђРїСЂРµР»СЊ_РњР°Р№_РСЋРЅСЊ_РСЋР»СЊ_РђРІРіСѓСЃС‚_РЎРµРЅС‚СЏР±СЂСЊ_РћРєС‚СЏР±СЂСЊ_РќРѕСЏР±СЂСЊ_Р”РµРєР°Р±СЂСЊ".split("_"),
+    monthsShort : "РЇРЅРІ_Р¤РµРІ_РњР°СЂ_РђРїСЂ_РњР°Р№_РСЋРЅ_РСЋР»_РђРІРі_РЎРµРЅ_РћРєС‚_РќРѕСЏ_Р”РµРє".split("_"),
+    weekdays : "Р’РѕСЃРєСЂРµСЃРµРЅСЊРµ_РџРѕРЅРµРґРµР»СЊРЅРёРє_Р’С‚РѕСЂРЅРёРє_РЎСЂРµРґР°_Р§РµС‚РІРµСЂРі_РџСЏС‚РЅРёС†Р°_РЎСѓР±Р±РѕС‚Р°".split("_"),
+    weekdaysShort : "Р’СЃРє_РџРЅРґ_Р’С‚СЂ_РЎСЂРґ_Р§С‚РІ_РџС‚РЅ_РЎР±С‚".split("_"),
+    weekdaysMin : "Р’СЃ_РџРЅ_Р’С‚_РЎСЂ_Р§С‚_РџС‚_РЎР±".split("_"),
     longDateFormat : {
         L : "DD.MM.YYYY"
     }
@@ -120,11 +120,11 @@ var Calendar = React.createClass({
         <table className={classes}>
         <thead>
         <tr className="month-header">
-        <th className="previous" onClick={this.previous} style={actionStyle}>«</th>
+        <th className="previous" onClick={this.previous} style={actionStyle}>В«</th>
     <th colSpan="5">
         <span className="month">{month.format('MMMM')}</span> <span className="year">{month.format('YYYY')}</span>
     </th>
-    <th className="next" onClick={this.next} style={actionStyle}>»</th>
+    <th className="next" onClick={this.next} style={actionStyle}>В»</th>
     </tr>
     </thead>
     <thead>

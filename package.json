@@ -25,6 +25,19 @@
   },
   "homepage": "https://github.com/volkovpv/react-calendar-multilingual#readme",
   "dependencies": {
+    "moment": "^2.10.6",
     "react": "^0.14.2"
+  },
+  "devDependencies": {
+    "browserify": "^12.0.1",
+    "gulp": "^3.9.0",
+    "gulp-livereload": "^3.8.1",
+    "gulp-sourcemaps": "^1.6.0",
+    "reactify": "^1.1.1",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
+  },
+  "browserify": {
+    "transform": "reactify"
   }
 }
