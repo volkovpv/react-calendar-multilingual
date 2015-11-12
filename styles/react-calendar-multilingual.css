@@ -1,0 +1,30 @@
+.addCalendar {
+    border-collapse: collapse;
+    padding: 0;
+}
+
+.addCalendar th,
+.addCalendar td {
+    padding: 5px 15px;
+    text-align: center;
+}
+
+.Day:hover {
+    background: #666;
+    color: #000;
+}
+
+.Day.today {
+    background: #30bb2a;
+    color: #fff;
+}
+
+.Day.selected {
+    background: #2980b9;
+    color: #fff;
+}
+
+.Day.other-month {
+    background: #fafafa;
+    color: #aaa;
+}

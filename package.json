@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/volkovpv/react-calendar-multilingual/issues"
   },
-  "homepage": "https://github.com/volkovpv/react-calendar-multilingual#readme"
+  "homepage": "https://github.com/volkovpv/react-calendar-multilingual#readme",
+  "dependencies": {
+    "react": "^0.14.2"
+  }
 }
