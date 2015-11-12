@@ -7,7 +7,8 @@ var gulp            = require('gulp'),
     source          = require('vinyl-source-stream'),
     buffer          = require('vinyl-buffer'),
     browserify      = require('browserify'),
-    sourcemaps      = require('gulp-sourcemaps');
+    sourcemaps      = require('gulp-sourcemaps'),
+    rename          = require('gulp-rename');
 
 //build react.js
 gulp.task('react', function(){
@@ -21,11 +22,24 @@ gulp.task('react', function(){
         .pipe(source("main.js"))
         .pipe(buffer())
         .pipe(sourcemaps.init({loadMaps: true}))
-        .pipe(sourcemaps.write('../www/source-map'))
+        .pipe(sourcemaps.write('/source-map'))
         .pipe(gulp.dest("./www/"));
 });
 
-gulp.task('watch', ['react'], function() {
+//copy css
+gulp.task('css', function() {
+    gulp.src('styles/*.css')
+        .pipe(gulp.dest('www/'));
+});
+
+//copy index.html
+gulp.task('index', function() {
+    gulp.src('src/index.template.html')
+        .pipe(rename('index.html'))
+        .pipe(gulp.dest('www/'));
+});
+
+gulp.task('watch', ['react', 'css', 'index'], function() {
     liveReload({ start: true });
 
     gulp.watch('./src/**', ['react']);

@@ -1,15 +1,12 @@
 /**
  * Created by volkovpv on 08.2015.
  */
-
-window.React = require('react');
-
 var _month = true;
 
-var Day = require('./Day'),
-    DayOfWeek = require('./DayOfWeek'),
-    Week = require('./Week'),
-    moment = require('moment');
+var moment      = require('moment'),
+    Day         = require('./Day'),
+    DayOfWeek   = require('./DayOfWeek'),
+    Week        = require('./Week');
 
 moment.locale('ru', {
     months : "Январь_Февраль_Март_Апрель_Май_Июнь_Июль_Август_Сентябрь_Октябрь_Ноябрь_Декабрь".split("_"),
@@ -36,8 +33,9 @@ var Calendar = React.createClass({
     },
 
     getInitialState : function() {
-        var date = this.props.date;
-        var month;
+        var month,
+            date = this.props.date;
+
         if (date) {
             month = this.props.date;
         } else {
@@ -49,93 +47,103 @@ var Calendar = React.createClass({
         }
     },
 
-    handleClick : function(event) {
+    _handleClick : function(event) {
         var date = event.target.getAttribute('data-date');
+
         this.props.onSelect(date);
         this.setState({
             date: moment(date)
         });
     },
 
-    previous : function() {
+    _previous : function() {
         this.setState({
             month: moment(this.state.month).subtract(1, 'month')
         });
     },
 
-    next : function() {
+    _next : function() {
         this.setState({
             month: moment(this.state.month).add(1, 'month')
         });
     },
 
     render : function() {
-        var classes = ['addCalendar', this.props.className].join(' ');
+        var classes             = ['addCalendar', this.props.className].join(' '),
+            today               = moment(),
+            date                = this.state.date,
+            month               = this.state.month,
+            startOfWeekIndex    = 1,
+            current             = month.clone().startOf('month').day(startOfWeekIndex),
+            end                 = month.clone().endOf('month').day(7),
+            elements            = [],
+            days                = [],
+            week                = 1,
+            daysOfWeek          = [],
+            day                 = current.clone(),
+            actionStyle         = {},
+            dayOfWeekKey        = null,
+            isCurrentMonth      = null,
+            weekKey             = null,
+            i                   = 1;
 
-        var actionStyle = {
+        actionStyle = {
             cursor: 'pointer'
         };
 
-        var today = moment();
-
-        var date = this.state.date;
-        var month = this.state.month;
-
-        var startOfWeekIndex = 1;
-
-        var current = month.clone().startOf('month').day(startOfWeekIndex);
-        var end = month.clone().endOf('month').day(7);
-
-        var elements = [];
-        var days = [];
-        var week = 1;
-        var i = 1;
-        var daysOfWeek = [];
-        var day = current.clone();
         for (var j = 0; j < 7; j++) {
-            var dayOfWeekKey = 'dayOfWeek' + (j);
+            dayOfWeekKey = 'dayOfWeek' + (j);
             daysOfWeek.push(<DayOfWeek key={dayOfWeekKey} date={day.clone()} />);
-        day.add(1, 'days');
-    }
-    while (current.isBefore(end)) {
-    var isCurrentMonth = current.isSame(month, 'month');
-    days.push(
-    <Day key={i++}
-    date={current.clone()}
-    selected={date}
-    month={month}
-    today={today}
-    isCurrentMonth={isCurrentMonth}
-    handleClick={this.handleClick} />
-    );
-    current.add(1, 'days');
-    if (current.day() === 1) {
-        var weekKey = 'week' + week++;
-        elements.push(<Week key={weekKey}>{days}</Week>);
-        days = [];
-    }
-    }
-    return (
-        <div className="calendar">
-        <table className={classes}>
-        <thead>
-        <tr className="month-header">
-        <th className="previous" onClick={this.previous} style={actionStyle}>«</th>
-    <th colSpan="5">
-        <span className="month">{month.format('MMMM')}</span> <span className="year">{month.format('YYYY')}</span>
-    </th>
-    <th className="next" onClick={this.next} style={actionStyle}>»</th>
-    </tr>
-    </thead>
-    <thead>
-    <tr className="days-header">{daysOfWeek}</tr>
-        </thead>
-        <tbody>
-        {elements}
-        </tbody>
-        </table>
-        </div>
-    );
+            day.add(1, 'days');
+        }
+        while (current.isBefore(end)) {
+            isCurrentMonth = current.isSame(month, 'month');
+            days.push(
+                <Day key            ={i++}
+                     date           ={current.clone()}
+                     selected       ={date}
+                     month          ={month}
+                     today          ={today}
+                     isCurrentMonth ={isCurrentMonth}
+                     handleClick    ={this._handleClick} />
+            );
+
+            current.add(1, 'days');
+
+            if (current.day() === 1) {
+                weekKey = 'week' + week++;
+                elements.push(<Week key={weekKey}>{days}</Week>);
+                days = [];
+            }
+        }
+
+        return (
+            <div className="calendar">
+                <table className={classes}>
+
+                    <thead>
+                        <tr className="month-header">
+                            <th className="previous" onClick={this._previous} style={actionStyle}>«</th>
+                            <th colSpan="5">
+                                <span className="month">{month.format('MMMM')}</span> <span className="year">{month.format('YYYY')}</span>
+                            </th>
+                            <th className="next" onClick={this._next} style={actionStyle}>»</th>
+                        </tr>
+                    </thead>
+
+
+                    <thead>
+                        <tr className="days-header">{daysOfWeek}</tr>
+                    </thead>
+
+
+                    <tbody>
+                        {elements}
+                    </tbody>
+
+                </table>
+            </div>
+        );
     }
 });
 
