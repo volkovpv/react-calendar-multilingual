@@ -26,7 +26,8 @@
   "homepage": "https://github.com/volkovpv/react-calendar-multilingual#readme",
   "dependencies": {
     "moment": "^2.10.6",
-    "react": "^0.14.2"
+    "react": "^0.14.2",
+    "react-dom": "^0.14.2"
   },
   "devDependencies": {
     "browserify": "^12.0.1",

@@ -57,14 +57,16 @@ var Calendar = React.createClass({
     },
 
     _previous : function() {
+        var period = _month?'years':'month';
         this.setState({
-            month: moment(this.state.month).subtract(1, 'month')
+            month: moment(this.state.month).subtract(1, period)
         });
     },
 
     _next : function() {
+        var period = _month?'years':'month';
         this.setState({
-            month: moment(this.state.month).add(1, 'month')
+            month: moment(this.state.month).add(1, period)
         });
     },
 
@@ -125,16 +127,14 @@ var Calendar = React.createClass({
                         <tr className="month-header">
                             <th className="previous" onClick={this._previous} style={actionStyle}>«</th>
                             <th colSpan="5">
-                                <span className="month">{month.format('MMMM')}</span> <span className="year">{month.format('YYYY')}</span>
+                                <span className="month">{(_month === false)?month.format('MMMM'):null}</span> <span className="year">{month.format('YYYY')}</span>
                             </th>
                             <th className="next" onClick={this._next} style={actionStyle}>»</th>
                         </tr>
                     </thead>
 
 
-                    <thead>
-                        <tr className="days-header">{daysOfWeek}</tr>
-                    </thead>
+                    {(_month === false)?<thead><tr className="days-header">{daysOfWeek}</tr></thead>:null}
 
 
                     <tbody>
