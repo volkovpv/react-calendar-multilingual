@@ -6,7 +6,8 @@ var _month = true;
 var moment      = require('moment'),
     Day         = require('./Day'),
     DayOfWeek   = require('./DayOfWeek'),
-    Week        = require('./Week');
+    Week        = require('./Week'),
+    Month       = require('./Month');
 
 moment.locale('ru', {
     months : "Январь_Февраль_Март_Апрель_Май_Июнь_Июль_Август_Сентябрь_Октябрь_Ноябрь_Декабрь".split("_"),
@@ -21,29 +22,13 @@ moment.locale('ru', {
 
 var Calendar = React.createClass({
     propTypes: {
-        onSelect: React.PropTypes.func.isRequired,
-        date: React.PropTypes.object,
-        month: React.PropTypes.object
-    },
-
-    getDefaultProps : function() {
-        return {
-            month: moment()
-        }
+        onSelect: React.PropTypes.func.isRequired
     },
 
     getInitialState : function() {
-        var month,
-            date = this.props.date;
-
-        if (date) {
-            month = this.props.date;
-        } else {
-            month = this.props.month;
-        }
         return {
-            date: date,
-            month: month
+            date: null,
+            month: moment()
         }
     },
 
@@ -76,18 +61,25 @@ var Calendar = React.createClass({
             date                = this.state.date,
             month               = this.state.month,
             startOfWeekIndex    = 1,
-            current             = month.clone().startOf('month').day(startOfWeekIndex),
-            end                 = month.clone().endOf('month').day(7),
+            currentDay          = month.clone().startOf('month').day(startOfWeekIndex),
+            endDay              = month.clone().endOf('month').day(7),
             elements            = [],
             days                = [],
             week                = 1,
             daysOfWeek          = [],
-            day                 = current.clone(),
+            day                 = currentDay.clone(),
             actionStyle         = {},
             dayOfWeekKey        = null,
             isCurrentMonth      = null,
+            isCurrentYear       = null,
             weekKey             = null,
-            i                   = 1;
+            i                   = 1,
+            k                   = 1;
+
+
+        var currentMonth        = month.clone().startOf('year').month(0),
+            endMonth            = month.clone().endOf('year').month(11),
+            months              = [];
 
         actionStyle = {
             cursor: 'pointer'
@@ -98,11 +90,28 @@ var Calendar = React.createClass({
             daysOfWeek.push(<DayOfWeek key={dayOfWeekKey} date={day.clone()} />);
             day.add(1, 'days');
         }
-        while (current.isBefore(end)) {
-            isCurrentMonth = current.isSame(month, 'month');
+
+
+        while(currentMonth.isBefore(endMonth)){
+            console.log(currentMonth.isBefore(endMonth));
+            currentMonth.add(1, 'month');
+            isCurrentYear = currentMonth.isSame(month, 'year');
+            months.push(
+                <Month key ={k++}/>
+            );
+        }
+
+
+
+
+
+
+        while (currentDay.isBefore(endDay)) {
+            //console.log(currentDay.isBefore(endDay));
+            isCurrentMonth = currentDay.isSame(month, 'month');
             days.push(
                 <Day key            ={i++}
-                     date           ={current.clone()}
+                     date           ={currentDay.clone()}
                      selected       ={date}
                      month          ={month}
                      today          ={today}
@@ -110,9 +119,9 @@ var Calendar = React.createClass({
                      handleClick    ={this._handleClick} />
             );
 
-            current.add(1, 'days');
+            currentDay.add(1, 'days');
 
-            if (current.day() === 1) {
+            if (currentDay.day() === 1) {
                 weekKey = 'week' + week++;
                 elements.push(<Week key={weekKey}>{days}</Week>);
                 days = [];
