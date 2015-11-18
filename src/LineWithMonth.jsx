@@ -5,7 +5,9 @@
 var LineWithMonth = React.createClass({
     render: function(){
         return(
-            <div></div>
+            <tr className="Week">{this.props.children}</tr>
         );
     }
 });
+
+module.exports = LineWithMonth;

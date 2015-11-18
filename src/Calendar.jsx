@@ -7,7 +7,8 @@ var moment      = require('moment'),
     Day         = require('./Day'),
     DayOfWeek   = require('./DayOfWeek'),
     Week        = require('./Week'),
-    Month       = require('./Month');
+    Month       = require('./Month'),
+    LineWithMonth   = require('./LineWithMonth');
 
 moment.locale('ru', {
     months : "Январь_Февраль_Март_Апрель_Май_Июнь_Июль_Август_Сентябрь_Октябрь_Ноябрь_Декабрь".split("_"),
@@ -79,7 +80,8 @@ var Calendar = React.createClass({
 
         var currentMonth        = month.clone().startOf('year').month(0),
             endMonth            = month.clone().endOf('year').month(11),
-            months              = [];
+            months              = [],
+            elementsMonth       = [];
 
         actionStyle = {
             cursor: 'pointer'
@@ -92,13 +94,46 @@ var Calendar = React.createClass({
         }
 
 
-        while(currentMonth.isBefore(endMonth)){
-            console.log(currentMonth.isBefore(endMonth));
-            currentMonth.add(1, 'month');
-            isCurrentYear = currentMonth.isSame(month, 'year');
-            months.push(
-                <Month key ={k++}/>
-            );
+        //while(currentMonth.isBefore(endMonth)){
+        //    //console.log(currentMonth.isBefore(endMonth));
+        //    console.log(currentMonth.month());
+        //    currentMonth.add(1, 'month');
+        //
+        //    isCurrentYear = currentMonth.isSame(month, 'year');
+        //    months.push(
+        //        <Month key ={k++}/>
+        //    );
+        //
+        //
+        //
+        //    if (currentMonth.month() === 1) {
+        //        weekKey = 'week' + week++;
+        //        elementsMonth.push(<LineWithMonth key={weekKey}>{days}</LineWithMonth>);
+        //        months = [];
+        //    }
+        //}
+
+
+        for (var f = 0; f < 5; f++) {
+            //console.log("Группа "+f);
+            while(currentMonth.isBefore(endMonth)){
+                //console.log(currentMonth.month());
+
+                months.push(
+                    <Month key ={k++}
+                           date ={currentMonth.clone()}
+                        />
+                );
+
+                currentMonth.add(1, 'month');
+
+                if (currentMonth.month() === 4 || currentMonth.month() === 8 || (elementsMonth.length === 2 && currentMonth.month() === 0)) {
+                    weekKey = 'week' + week++;
+                    elementsMonth.push(<LineWithMonth key={weekKey}>{months}</LineWithMonth>);
+                    months = [];
+                    break;
+                }
+            }
         }
 
 
@@ -107,7 +142,6 @@ var Calendar = React.createClass({
 
 
         while (currentDay.isBefore(endDay)) {
-            //console.log(currentDay.isBefore(endDay));
             isCurrentMonth = currentDay.isSame(month, 'month');
             days.push(
                 <Day key            ={i++}
@@ -135,7 +169,7 @@ var Calendar = React.createClass({
                     <thead>
                         <tr className="month-header">
                             <th className="previous" onClick={this._previous} style={actionStyle}>«</th>
-                            <th colSpan="5">
+                            <th colSpan={(_month === false)?5:2}>
                                 <span className="month">{(_month === false)?month.format('MMMM'):null}</span> <span className="year">{month.format('YYYY')}</span>
                             </th>
                             <th className="next" onClick={this._next} style={actionStyle}>»</th>
@@ -147,7 +181,7 @@ var Calendar = React.createClass({
 
 
                     <tbody>
-                        {elements}
+                        {(_month === false)?elements:elementsMonth}
                     </tbody>
 
                 </table>

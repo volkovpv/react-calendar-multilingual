@@ -12,4 +12,4 @@ var Month = React.createClass({
     }
 });
 
-module.export = Month;
+module.exports = Month;
