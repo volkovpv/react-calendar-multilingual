@@ -78,8 +78,8 @@ var Calendar = React.createClass({
             k                   = 1;
 
 
-        var currentMonth        = month.clone().startOf('year').month(0),
-            endMonth            = month.clone().endOf('year').month(11),
+        var currentMonth        = month.clone().month(0),
+            endMonth            = month.clone().endOf('year').month(12),
             months              = [],
             elementsMonth       = [];
 
@@ -93,35 +93,15 @@ var Calendar = React.createClass({
             day.add(1, 'days');
         }
 
-
-        //while(currentMonth.isBefore(endMonth)){
-        //    //console.log(currentMonth.isBefore(endMonth));
-        //    console.log(currentMonth.month());
-        //    currentMonth.add(1, 'month');
-        //
-        //    isCurrentYear = currentMonth.isSame(month, 'year');
-        //    months.push(
-        //        <Month key ={k++}/>
-        //    );
-        //
-        //
-        //
-        //    if (currentMonth.month() === 1) {
-        //        weekKey = 'week' + week++;
-        //        elementsMonth.push(<LineWithMonth key={weekKey}>{days}</LineWithMonth>);
-        //        months = [];
-        //    }
-        //}
-
-
         for (var f = 0; f < 5; f++) {
-            //console.log("Группа "+f);
             while(currentMonth.isBefore(endMonth)){
-                //console.log(currentMonth.month());
-
+                isCurrentYear = currentMonth.isSame(month, 'year');
                 months.push(
-                    <Month key ={k++}
-                           date ={currentMonth.clone()}
+                    <Month key              ={k++}
+                           date             ={currentMonth.clone()}
+                           today            ={today}
+                           isCurrentYear    ={isCurrentYear}
+                           handleClick      ={this._handleClick}
                         />
                 );
 
@@ -135,10 +115,6 @@ var Calendar = React.createClass({
                 }
             }
         }
-
-
-
-
 
 
         while (currentDay.isBefore(endDay)) {
